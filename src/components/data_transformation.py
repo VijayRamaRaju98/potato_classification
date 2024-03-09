@@ -1,17 +1,11 @@
-import os
-import sys
 
-import numpy as np
 from src.components.data_ingestion import DataIngestion
-
-
 import tensorflow as tf
-#sys.path.insert(1,"C:\\Users\\Vijay Rama Raju U\\datasets\\vijay\\potato\\src\\components")
-#from src.components.data_ingestion import DataIngestion
+
 
 class get_dataset_partitions:
     def __init__(self):
-        name = "hello world"
+        pass
 
     def train_test_val_split(dataset, train_split=0.8, test_split=0.1, val_split=0.1, shuffle=True, shuffle_size=1000):
         try:
@@ -34,7 +28,7 @@ class data_manupulation:
     def __init__(self):
         number = 10
 
-    def shuffle_the_data(self,train_ds, test_ds,val_ds):
+    def shuffle_the_data(train_ds, test_ds,val_ds):
         train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
         test_ds = test_ds.cache().shuffle(1000).prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
         val_ds = test_ds.cache().shuffle(1000).prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
@@ -43,7 +37,7 @@ class data_manupulation:
     
 
 
-    def model_building(self):
+    def model_building():
         input_shape_ = (32,256,256,3)
         n_clases = 3
         data_aug = tf.keras.Sequential([
@@ -59,7 +53,7 @@ class data_manupulation:
         model = tf.keras.models.Sequential([
             data_aug,
             data_resizing,
-            
+
             tf.keras.layers.Conv2D(32,kernel_size=(3,3),activation='relu',input_shape=input_shape_),
             tf.keras.layers.MaxPooling2D((2,2)),
             tf.keras.layers.Conv2D(64,kernel_size=(3,3),activation='relu',),
@@ -84,11 +78,3 @@ class data_manupulation:
     
 
 
-if __name__=="__main__":
-    ingestion = DataIngestion()
-    dataset = ingestion.initiate_data_ingestion()
-    train_data,test_data, val_data = get_dataset_partitions.train_test_val_split(dataset)
-    train_ds, test_ds, val_ds = data_manupulation.shuffle_the_data(self=data_manupulation,train_ds=train_data, test_ds=test_data,val_ds=val_data)
-    model = data_manupulation.model_building(self=data_manupulation)
-    model_training = model.fit(train_ds, batch_size=32,validation_data=val_ds, verbose=1,epochs=2)
-    print(model_training.history['accuracy'])
