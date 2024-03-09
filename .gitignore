@@ -120,6 +120,9 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+.tfgpu
+tfgpu/
+tfgpu
 .env
 .venv
 env/

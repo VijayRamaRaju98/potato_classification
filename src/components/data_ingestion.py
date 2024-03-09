@@ -1,12 +1,15 @@
 import os
 import sys
+
+sys.path.insert(1,"C:\\Users\\Vijay Rama Raju U\\datasets\\vijay\\potato\\src")
 import pandas as pd
 import tensorflow as tf
 #from data_transformation import get_dataset_partitions
 #from src.data_transformation import get_dataset_partitions
 #from data_transformation import data_manupulation
 from dataclasses import dataclass
-from src.components.data_ingestion import DataIngestion
+#from src.components.data_ingestion import DataIngestion
+#from  src.components.data_ingestion import DataIngestion
 
 @dataclass
 class DataIngestionConfig:
