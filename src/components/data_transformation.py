@@ -1,5 +1,5 @@
 
-from src.components.data_ingestion import DataIngestion
+from src.components.data_ingestion import DataIngestion, n_classes
 import tensorflow as tf
 
 
@@ -26,7 +26,7 @@ class get_dataset_partitions:
 
 class data_manupulation:
     def __init__(self):
-        number = 10
+        pass
 
     def shuffle_the_data(train_ds, test_ds,val_ds):
         train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
@@ -38,8 +38,11 @@ class data_manupulation:
 
 
     def model_building():
-        input_shape_ = (32,256,256,3)
-        n_clases = 3
+        IMAGE_SIZE = 256
+        BATCH_SIZE = 32
+        CHANNELS = 3
+        input_shape_ = (BATCH_SIZE, IMAGE_SIZE,IMAGE_SIZE,CHANNELS)
+        
         data_aug = tf.keras.Sequential([
             tf.keras.layers.experimental.preprocessing.RandomFlip('horizontal_and_vertical'),
             tf.keras.layers.experimental.preprocessing.RandomRotation(0.2)])
@@ -66,7 +69,7 @@ class data_manupulation:
             tf.keras.layers.MaxPooling2D((2,2)),
             tf.keras.layers.Flatten(),
             tf.keras.layers.Dense(64,activation='relu'),
-            tf.keras.layers.Dense(n_clases,activation='softmax')
+            tf.keras.layers.Dense(n_classes,activation='softmax')
 
         ])
 
